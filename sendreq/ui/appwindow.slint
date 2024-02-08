@@ -1,0 +1,58 @@
+import { HorizontalBox,Button, VerticalBox, LineEdit,TextEdit,ComboBox } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    width: 800px;
+    height: 2000px;
+    in-out property <string> response;
+    callback send_request(string, string, string, string);
+    HorizontalBox {
+        method := ComboBox {
+            y: 0px;
+            width: self.preferred-width;
+            height: self.preferred-height;
+            model: ["GET", "PUT", "POST", "DELETE"];
+            current-value: "GET";
+        }
+        request_url := LineEdit {
+            font-size: 14px;
+            width: parent.width * 0.8;
+            height: 30px;
+            placeholder-text: "Enter text here";
+        }
+        Button {
+            text: "Send";
+            primary: true;
+            height: 30px;
+            clicked => {
+                root.send_request(method.current-value, request_url.text, header.text, body.text);
+            }
+        }
+    }
+
+    VerticalBox {
+        padding-top: 60px;
+        header := TextEdit {
+            font-size: 14px;
+            width: parent.width * 0.8;
+            height: 200px;
+            text: "Lorem ipsum dolor sit amet,\n consectetur adipisici elit";
+        }
+
+        body := TextEdit {
+            font-size: 14px;
+            width: parent.width * 0.8;
+            height: 300px;
+            text: "Lorem ipsum dolor sit amet,\n consectetur adipisici elit";
+        }
+    }
+
+    VerticalBox {
+        padding-top: 600px;
+        TextEdit {
+            font-size: 14px;
+            width: parent.width;
+            height: parent.height;
+            text: "\{root.response}";
+        }
+    }
+}
