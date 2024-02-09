@@ -1,5 +1,7 @@
 slint::include_modules!();
 
+mod request;
+
 fn main() -> Result<(), slint::PlatformError> {
     let ui = AppWindow::new()?;
 
